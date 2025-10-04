@@ -1,0 +1,279 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="farmer-content">
+    
+    <!-- Modern Header Section -->
+    <div class="modern-header">
+      <div class="header-overlay">
+        <div class="header-top">
+          <div class="location-info">
+            <ion-icon name="location-outline"></ion-icon>
+            <div>
+              <h1 class="location-name">{{ city }}</h1>
+              <p class="weather-desc" *ngIf="currentWeather && currentWeather.weather">{{ currentWeather.weather?.[0]?.description }}</p>
+            </div>
+          </div>
+          
+          <div class="weather-temp">
+            <span class="temp-value">{{ currentWeather.main?.temp | number:'1.0-0' }}°</span>
+            <ion-icon name="partly-sunny-outline" class="weather-icon"></ion-icon>
+          </div>
+        </div>
+        
+        <div class="user-greeting">
+          <h2>Good {{ getTimeGreeting() }}, {{ user_name || 'Farmer' }}!</h2>
+          <p>Let's make your farming smarter today</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Useful Reminders Section -->
+    <div class="reminders-section">
+      <div class="section-header">
+        <h3>
+          <ion-icon name="notifications-outline"></ion-icon>
+          Today's Reminders
+        </h3>
+      </div>
+      
+      <div class="reminders-carousel">
+        <div class="reminders-container">
+          <div *ngFor="let reminder of reminders" class="reminder-slide">
+            <div class="reminder-card" [ngClass]="'priority-' + reminder.priority">
+              <div class="reminder-icon">
+                <ion-icon [name]="reminder.icon"></ion-icon>
+              </div>
+              <div class="reminder-content">
+                <h4>{{ reminder.title }}</h4>
+                <p>{{ reminder.message }}</p>
+                <span class="reminder-time">{{ reminder.time }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- My Crops Section -->
+    <div class="my-crops-section ion-padding">
+      <div class="section-header">
+        <h3>
+          <ion-icon name="flower-outline"></ion-icon>
+          My Crops
+        </h3>
+        <ion-button fill="clear" size="small" class="view-all-btn" (click)="viewAllCrops()" *ngIf="userCrops.length > 0">
+          View All
+        </ion-button>
+      </div>
+      
+      <div class="crops-slider" *ngIf="userCrops.length > 0; else noCropsTemplate">
+        <div class="crops-container">
+          <div *ngFor="let crop of userCrops" class="crop-slide">
+            <div class="crop-card">
+              <div class="crop-image">
+                <img [src]="crop.image" [alt]="crop.cropName" onerror="this.src='https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=200&h=120&fit=crop'">
+              </div>
+              <div class="crop-info">
+                <h4>{{ crop.cropName }}</h4>
+                <div class="crop-meta">
+                  <span class="field-size">{{ crop.fieldSize }} acres</span>
+                  <div class="crop-status" [ngClass]="'status-' + crop.status.toLowerCase()">
+                    {{ crop.status }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="crop-slide">
+            <div class="add-crop-card" (click)="openAddCropModal()">
+              <ion-icon name="add-outline"></ion-icon>
+              <span>Add New</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <ng-template #noCropsTemplate>
+        <div class="no-crops-state">
+          <ion-icon name="leaf-outline"></ion-icon>
+          <div>
+            <h4>No Crops Yet</h4>
+                 <!-- <ion-button size="small" color="success" (click)="openAddCropModal()">
+              Add Crop
+            </ion-button> -->
+            <ion-button (click)="openAddCropModal()"  shape="round">
+              <ion-icon slot="start" name="add" color="light"></ion-icon>
+              Click me
+            </ion-button>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+
+    <!-- Quick Solutions Grid -->
+    <div class="solutions-section">
+      <div class="section-header">
+        <h3>
+          <ion-icon name="flash-outline"></ion-icon>
+          Quick Solutions
+        </h3>
+      </div>
+      
+      <div class="solutions-grid">
+        <div class="solution-card featured" [routerLink]="['/crop']">
+          <div class="solution-content">
+            <ion-icon name="leaf-outline" class="solution-icon"></ion-icon>
+            <h4>AI Crop Advisor</h4>
+            <ion-chip color="success" size="small">
+              <ion-icon name="sparkles-outline"></ion-icon>
+              <ion-label>AI</ion-label>
+            </ion-chip>
+          </div>
+        </div>
+
+        <div class="solution-card" [routerLink]="['/weather']">
+          <div class="solution-content">
+            <ion-icon name="cloud-outline" class="solution-icon"></ion-icon>
+            <h4>Weather</h4>
+          </div>
+        </div>
+
+        
+        <div class="solution-card" [routerLink]="['/chat-bot']" routerLinkActive="router-link-active" >
+          <div class="solution-content">
+            <ion-icon name="chatbubbles-outline" class="solution-icon"></ion-icon>
+            <h4>Assistant</h4>
+          </div>
+        </div>
+
+
+        <div class="solution-card" [routerLink]="['/scan']" routerLinkActive="router-link-active" >
+          <div class="solution-content">
+            <ion-icon name="shield-checkmark-outline" class="solution-icon"></ion-icon>
+            <h4>Plant Scanner</h4>
+          </div>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-content">
+            <ion-icon name="flask-outline" class="solution-icon"></ion-icon>
+            <h4>Fertilizer</h4>
+          </div>
+        </div>
+
+        <div class="solution-card">
+          <div class="solution-content">
+            <ion-icon name="analytics-outline" class="solution-icon"></ion-icon>
+            <h4>Analytics</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+        <!-- Grain Prices Section -->
+    <div class="prices-section">
+      <div class="section-header">
+        <h3>
+          <ion-icon name="trending-up-outline"></ion-icon>
+          Market Prices
+        </h3>
+        <ion-button fill="clear" size="small" class="view-all-btn">
+          View All
+          <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </div>
+      
+      <div class="prices-carousel">
+        <div class="prices-container">
+          <div *ngFor="let grain of grainPrices" class="price-slide">
+            <div class="price-card">
+              <div class="grain-image">
+                <img [src]="grain.image" [alt]="grain.name">
+              </div>
+              <div class="grain-info">
+                <h4>{{ grain.name }}</h4>
+                <div class="price-info">
+                  <span class="current-price">₹{{ grain.currentPrice }}/{{ grain.unit }}</span>
+                  <div class="price-change" [ngClass]="grain.change >= 0 ? 'positive' : 'negative'">
+                    <ion-icon [name]="grain.change >= 0 ? 'trending-up-outline' : 'trending-down-outline'"></ion-icon>
+                    <span>{{ grain.change >= 0 ? '+' : '' }}{{ grain.change }}%</span>
+                  </div>
+                </div>
+                <p class="market-location">{{ grain.market }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Quick Stats -->
+    <div class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <ion-icon name="leaf-outline"></ion-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ totalCrops }}</span>
+            <span class="stat-label">Crops Advised</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <ion-icon name="people-outline"></ion-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ totalFarmers }}</span>
+            <span class="stat-label">Farmers Helped</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <ion-icon name="trending-up-outline"></ion-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ yieldIncrease }}%</span>
+            <span class="stat-label">Avg Yield Increase</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Bottom Navigation -->
+<!-- <ion-tabs>
+  <ion-tab-bar slot="bottom" class="custom-tab-bar">
+    <ion-tab-button tab="home">
+      <ion-icon name="home" color="success"></ion-icon>
+      <ion-label color="success">Home</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="moments">
+      <ion-icon name="time-outline"></ion-icon>
+      <ion-label>Moments</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="spray">
+      <ion-icon name="water-outline"></ion-icon>
+      <ion-label>Spray</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="browse">
+      <ion-icon name="grid-outline"></ion-icon>
+      <ion-label>Browse</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="profile">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs> -->

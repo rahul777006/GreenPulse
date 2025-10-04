@@ -1,0 +1,159 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Weather Forecast</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="weather-page">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-overlay"></div>
+    
+    <!-- Location Header -->
+    <div class="location-header fade-in-up">
+      <ion-icon name="location" class="location-icon"></ion-icon>
+      <div class="location-info">
+        <h1>{{ city }}</h1>
+        <p>{{ getCurrentDate() }}</p>
+      </div>
+    </div>
+
+    <!-- Main Weather Card -->
+    <div class="main-weather-card fade-in-up" *ngIf="!loadingCurrent && !errorCurrent; else loadingTemplate" style="animation-delay: 0.2s">
+      <div class="weather-display">
+        <div class="temperature-section">
+          <div class="temp-main">{{ currentWeather.main?.temp | number:'1.0-0' }}°</div>
+          <div class="temp-unit">C</div>
+        </div>
+        <div class="weather-info">
+          <ion-icon [name]="getIcon(currentWeather.weather?.[0]?.main)" class="weather-icon"></ion-icon>
+          <p class="condition">{{ currentWeather.weather?.[0]?.description | titlecase }}</p>
+          <p class="feels-like">Feels like {{ currentWeather.main?.feels_like | number:'1.0-0' }}°C</p>
+        </div>
+      </div>
+      
+      <!-- Weather Stats -->
+      <div class="weather-stats">
+        <div class="stat-item">
+          <ion-icon name="water" class="stat-icon"></ion-icon>
+          <div class="stat-info">
+            <span class="stat-value">{{ currentWeather.main?.humidity }}%</span>
+            <span class="stat-label">Humidity</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="speedometer" class="stat-icon"></ion-icon>
+          <div class="stat-info">
+            <span class="stat-value">{{ currentWeather.wind?.speed | number:'1.0-0' }}</span>
+            <span class="stat-label">Wind km/h</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="eye" class="stat-icon"></ion-icon>
+          <div class="stat-info">
+            <span class="stat-value">{{ (currentWeather.visibility / 1000) | number:'1.0-0' }}</span>
+            <span class="stat-label">Visibility km</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="arrow-down" class="stat-icon"></ion-icon>
+          <div class="stat-info">
+            <span class="stat-value">{{ currentWeather.main?.pressure }}</span>
+            <span class="stat-label">Pressure hPa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #loadingTemplate>
+      <div class="main-weather-card loading-card">
+        <div class="loading-content">
+          <ion-spinner name="crescent" color="light"></ion-spinner>
+          <p *ngIf="loadingCurrent">Fetching weather data...</p>
+          <p *ngIf="errorCurrent">Unable to load weather data</p>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <!-- Weather Alert -->
+    <div class="alert-card fade-in-up" *ngIf="alertMessage" [ngClass]="alertType" style="animation-delay: 0.4s">
+      <div class="alert-content">
+        <ion-icon [name]="alertType === 'good' ? 'checkmark-circle' : alertType === 'warning' ? 'warning' : 'information-circle'" class="alert-icon"></ion-icon>
+        <div class="alert-text">
+          <h4>{{ getAlertTitle() }}</h4>
+          <p>{{ alertMessage }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hourly Forecast -->
+    <div class="forecast-section fade-in-up" style="animation-delay: 0.6s">
+      <div class="section-header">
+        <h3>24-Hour Forecast</h3>
+        <ion-button fill="clear" size="small" color="primary">
+          <ion-icon name="chevron-forward" slot="end"></ion-icon>
+          View All
+        </ion-button>
+      </div>
+      
+      <div class="forecast-container" *ngIf="!loadingForecast; else forecastLoadingTemplate">
+        <div class="forecast-scroll">
+          <div class="forecast-card" *ngFor="let hour of forecast; trackBy: trackByFn">
+            <span class="forecast-time">{{ hour.time }}</span>
+            <ion-icon [name]="hour.icon" class="forecast-icon"></ion-icon>
+            <span class="forecast-temp">{{ hour.temp }}°</span>
+          </div>
+        </div>
+      </div>
+      
+      <ng-template #forecastLoadingTemplate>
+        <div class="forecast-loading">
+          <ion-skeleton-text animated style="width: 100%; height: 80px; border-radius: 12px;"></ion-skeleton-text>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Additional Weather Info -->
+    <div class="additional-info fade-in-up" style="animation-delay: 0.8s" *ngIf="!loadingCurrent && !errorCurrent">
+      <div class="info-grid">
+        <div class="info-card">
+          <ion-icon name="thermometer" class="info-icon"></ion-icon>
+          <div class="info-content">
+            <span class="info-label">Min / Max</span>
+            <span class="info-value">{{ currentWeather.main?.temp_min | number:'1.0-0' }}° / {{ currentWeather.main?.temp_max | number:'1.0-0' }}°</span>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <ion-icon name="sunny" class="info-icon"></ion-icon>
+          <div class="info-content">
+            <span class="info-label">UV Index</span>
+            <span class="info-value">3 - Low</span>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <ion-icon name="water" class="info-icon"></ion-icon>
+          <div class="info-content">
+            <span class="info-label">Precipitation</span>
+            <span class="info-value">{{ (currentWeather.rain?.['1h'] || 0) }}mm</span>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <ion-icon name="compass" class="info-icon"></ion-icon>
+          <div class="info-content">
+            <span class="info-label">Wind Direction</span>
+            <span class="info-value">{{ getWindDirection(currentWeather.wind?.deg) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "Green Pulse",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

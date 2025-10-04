@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sethi Telecom - Premium Mobile Phones</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+     <nav class="bg-blue-900 text-white shadow-lg p-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        
+        <!-- Logo -->
+        <div class="flex items-center">
+         
+          <span class="ml-2 text-xl font-bold">SETHI TELECOM</span>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8 ">
+          <a href="index.html" class="hover:text-blue-200 transition-colors">Home</a>
+         
+          <a href="about.html" class="hover:text-blue-200 transition-colors">About Us</a>
+          <a href="contact.html" class="hover:text-blue-200 transition-colors">Contact</a>
+          <a href="policy.html" class="hover:text-blue-200 transition-colors">Privacy Policy</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="menuBtn" class="text-white focus:outline-none">
+            <i id="menuIcon" class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" 
+         class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out md:hidden bg-blue-900">
+      <a href="index.html" class="block px-4 py-2 hover:bg-blue-500">Home</a>
+      
+      <a href="about.html" class="block px-4 py-2 hover:bg-blue-500">About Us</a>
+      <a href="contact.html" class="block px-4 py-2 hover:bg-blue-500">Contact</a>
+      <a href="policy.html" class="block px-4 py-2 hover:bg-blue-500">Privacy Policy</a>
+    </div>
+  </nav>
+    <!-- Hero Section -->
+   <section 
+  id="home" 
+  class="relative bg-cover bg-center bg-no-repeat text-white py-28 md:py-24 lg:py-32 "
+  style="background-image: url('./images/sethi-telecom-jalandhar-1lrt6xoezo.avif'); min-height: 80vh;"
+>
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+
+  <!-- Content -->
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+Your trusted mobile & accessories shop.    </h1>
+    <p class="text-lg sm:text-xl md:text-1xl mb-6 sm:mb-8">
+      Explore the newest smartphones, premium cases, chargers, earphones, and gadgets—all at the best prices.
+    </p>
+    <a href="about.html" 
+       class="inline-block bg-white text-blue-600 px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold hover:bg-blue-100 transition-colors">
+      Know More
+    </a>
+  </div>
+</section>
+
+<section class="px-6 py-12 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Convenience -->
+      <div class="p-6 bg-white shadow rounded-2xl text-center border">
+        <div class="text-purple-600 text-3xl mb-3">📍</div>
+        <h3 class="font-bold text-lg mb-2">CONVENIENCE</h3>
+        <p class="text-sm text-gray-600">
+          Explore top brands, compare prices, and shop your dream phone effortlessly..
+        </p>
+      </div>
+
+      <!-- Wide Selection -->
+      <div class="p-6 bg-white shadow rounded-2xl text-center border">
+        <div class="text-purple-600 text-3xl mb-3">👥</div>
+        <h3 class="font-bold text-lg mb-2">WIDE SELECTION</h3>
+        <p class="text-sm text-gray-600">
+          Upgrade to the newest mobiles anytime, anywhere with our smooth shopping experience
+        </p>
+      </div>
+
+      <!-- Fast Delivery -->
+      <div class="p-6 bg-white shadow rounded-2xl text-center border">
+        <div class="text-purple-600 text-3xl mb-3">🚴</div>
+        <h3 class="font-bold text-lg mb-2">FAST DELIVERY</h3>
+        <p class="text-sm text-gray-600">
+          Enjoy quick and reliable delivery, ensuring your  products arrive safely and fast.
+        </p>
+      </div>
+
+      <!-- Loyalty Programs -->
+      <div class="p-6 bg-white shadow rounded-2xl text-center border">
+        <div class="text-purple-600 text-3xl mb-3">💳</div>
+        <h3 class="font-bold text-lg mb-2">LOYALTY PROGRAMS</h3>
+        <p class="text-sm text-gray-600">
+          Earn rewards and enjoy exclusive discounts through our loyalty program.
+        </p>
+      </div>
+    </div>
+  </section>
+    <!-- Products Section -->
+      <div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6 text-center">Latest Products</h1>
+    
+    <!-- Container for cards -->
+    <div id="product-list" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
+  </div>
+
+    <!-- Customer Satisfaction Section -->
+    <!-- Delivery Section -->
+    
+    <!-- Scroll Animation Section -->
+     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Heading -->
+  <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">
+    Our Best Offers
+  </h2>
+
+  <!-- Cards Container -->
+  <div class="grid gap-8 md:grid-cols-3">
+    
+    <!-- Card 1 -->
+    <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out bg-white rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 p-6">
+      <img src="./images/1cf61d17-d078-4fde-acd0-66bdf8d6dbda.jpeg" 
+           alt="Premium Quality" 
+           class="rounded-lg shadow-md mb-4 w-full h-48 object-cover">
+      <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">Premium Quality</h3>
+      <p class="text-gray-600 text-sm sm:text-base">
+        Experience the finest mobile devices with crystal clear displays, powerful processors, and stunning cameras.
+      </p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out bg-white rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 p-6">
+      <img src="./images/fcf929f0-3b41-4369-86a8-32f85c7da1db.jpeg" 
+           alt="Latest Models" 
+           class="rounded-lg shadow-md mb-4 w-full h-48 object-cover">
+      <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">Latest Models</h3>
+      <p class="text-gray-600 text-sm sm:text-base">
+        Stay ahead with the newest smartphones on the market, designed for speed, performance, and style.
+      </p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out bg-white rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 p-6">
+      <img src="./images/c3988558-11c8-469e-8e40-4b5bf2fad83c.jpeg" 
+           alt="Affordable Prices" 
+           class="rounded-lg shadow-md mb-4 w-full h-48 object-cover">
+      <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">Affordable Prices</h3>
+      <p class="text-gray-600 text-sm sm:text-base">
+        Get premium smartphones at prices that suit your budget without compromising on quality.
+      </p>
+    </div>
+
+  </div>
+</section>
+   <section class="py-12 md:py-16 lg:py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <!-- Section Heading -->
+   
+
+    <!-- Animated Content 1 -->
+   <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out">
+  <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 md:gap-10 mb-12 md:mb-16">
+    
+    <!-- Image Section -->
+    <div class="w-full md:w-1/2 flex justify-center md:justify-start">
+      <img src="./images/t37k14sjj04lplm-aj1p21jbka.avif"
+           alt="Premium Features" 
+           class="rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+    </div>
+
+    <!-- Text Section -->
+    <div class="w-full md:w-1/2 text-center md:text-left mt-6 md:mt-0">
+      <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        Why Choose Us
+      </h3>
+
+      <ul class="list-disc list-inside text-base sm:text-lg md:text-xl text-gray-600 space-y-3">
+        <li>⚡ Latest models from top brands at the best prices</li>
+        <li>📱 Wide range of smartphones to fit every budget</li>
+        <li>💳 Easy EMI & exchange offers available</li>
+        <li>🌍 Secure packaging</li>
+        <li>⭐ Trusted by thousands of happy customers</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    <!-- Animated Content 2 -->
+    <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out">
+      <div class="flex flex-col md:flex-row-reverse items-center justify-between gap-6 md:gap-10 mb-12 md:mb-16">
+        <div class="w-full md:w-1/2 flex justify-center">
+          <img src="./images/sethi-telecom-jalandhar-1lrt6xoezo.avif"
+               alt="Advanced devices" 
+               class="rounded-lg shadow-lg max-w-[90%] md:max-w-sm lg:max-w-md">
+        </div>
+        <div class="w-full md:w-1/2 text-center md:text-left">
+          <h3 class="text-xl sm:text-2xl md:text-3xl text-center font-bold text-gray-800 mb-3 sm:mb-4">Advanced devices</h3>
+          <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-3 sm:mb-4 text-center">
+            Stay ahead with cutting-edge devices. Our phones
+             feature the latest innovations in mobile computing.   From 5G connectivity to AI-powered cameras, we bring you the future today.
+          </p>
+          <p class="text-sm sm:text-base md:text-lg text-gray-600 text-center">
+          
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Heading -->
+  <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">
+    What Our Customers Say
+  </h2>
+
+  <!-- Cards Container -->
+  <div class="grid gap-8 md:grid-cols-3">
+    
+    <!-- Card 1 -->
+    <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out bg-white rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 p-6">
+      <img src="./images/images (3).jpeg" 
+           alt="Premium Quality" 
+           class="rounded-lg shadow-md mb-4 w-full h-48 object-cover">
+    
+      <p class="text-gray-600 text-sm sm:text -base">
+      I bought my new phone here and the experience was amazing! The delivery was fast and the quality is top-notch
+      </p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out bg-white rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 p-6">
+      <img src="./images/images (4).jpeg" 
+           alt="Latest Models" 
+           class="rounded-lg shadow-md mb-4 w-full h-48 object-cover">
+     
+      <p class="text-gray-600 text-sm sm:text-base">
+       Great deals on the latest smartphones. I upgraded my old device with an easy exchange offer. Totally worth it!
+      </p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="scroll-animate opacity-0 translate-y-10 transform-gpu transition-all duration-700 ease-out bg-white rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 p-6">
+      <img src="./images/images (5).jpeg" 
+           alt="Affordable Prices" 
+           class="rounded-lg shadow-md mb-4 w-full h-48 object-cover">
+    
+      <p class="text-gray-600 text-sm sm:text-base">
+        "Their customer support is really helpful. I had some doubts about EMI options, and they guided me through everything.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+
+    <!-- Download App Section -->
+    <section class="py-20 bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Download Our Mobile App</h2>
+            <p class="text-xl mb-8">Get the best mobile shopping experience on the go</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <!-- Google Play Store -->
+                <a href="https://play.google.com/store/apps/details?id=com.sethiTelecom.App&pcampaignid=web_share" class="bg-white text-blue-600 px-8 py-4 rounded-lg flex items-center gap-3 hover:bg-blue-50 transition-colors">
+                    <i class="fab fa-google-play text-3xl"></i>
+                    <div class="text-left">
+                        <div class="text-sm">GET IT ON</div>
+                        <div class="font-bold text-lg">Google Play</div>
+                    </div>
+                </a>
+                
+                <!-- Apple App Store -->
+                <a href="#" class="bg-white text-blue-600 px-8 py-4 rounded-lg flex items-center gap-3 hover:bg-blue-50 transition-colors">
+                    <i class="fab fa-apple text-3xl"></i>
+                    <div class="text-left">
+                        <div class="text-sm">DOWNLOAD ON THE</div>
+                        <div class="font-bold text-lg">App Store</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Sethi Telecom</h3>
+                    <p class="text-blue-200">Your trusted partner for premium mobile devices and exceptional service.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-blue-200 hover:text-white">Home</a></li>
+                        <li><a href="#products" class="text-blue-200 hover:text-white">Products</a></li>
+                        <li><a href="about.html" class="text-blue-200 hover:text-white">About Us</a></li>
+                        <li><a href="contact.html" class="text-blue-200 hover:text-white">Contact</a></li>
+                         <li><a href="policy.html" class="hover:text-blue-200 transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-200 hover:text-white">Smartphones</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Accessories</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Wearables</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Tablets</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-blue-200 hover:text-white text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-blue-200 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-blue-200 hover:text-white text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-blue-200 hover:text-white text-xl"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-800 mt-8 pt-8 text-center">
+                <p class="text-blue-200">&copy; 2025 SETHI TELECOM. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href')
+            )});
+               
+            });
+    document.addEventListener("DOMContentLoaded", () => {
+  const els = document.querySelectorAll(".scroll-animate");
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Animate IN
+          entry.target.classList.remove("opacity-0", "translate-y-10");
+          entry.target.classList.add("opacity-100", "translate-y-0");
+        } else {
+          // Animate OUT (reset when leaving viewport)
+          entry.target.classList.remove("opacity-100", "translate-y-0");
+          entry.target.classList.add("opacity-0", "translate-y-10");
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  els.forEach((el) => io.observe(el));
+});
+   const menuBtn = document.getElementById("menuBtn");
+    const menuIcon = document.getElementById("menuIcon");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuBtn.addEventListener("click", () => {
+      if (mobileMenu.classList.contains("max-h-0")) {
+        mobileMenu.classList.remove("max-h-0", "opacity-0");
+        mobileMenu.classList.add("max-h-screen", "opacity-100");
+        menuIcon.classList.remove("fa-bars");
+        menuIcon.classList.add("fa-times");
+      } else {
+        mobileMenu.classList.remove("max-h-screen", "opacity-100");
+        mobileMenu.classList.add("max-h-0", "opacity-0");
+        menuIcon.classList.remove("fa-times");
+        menuIcon.classList.add("fa-bars");
+      }
+    });
+
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('https://sethi.fast.in.net/public/api/show-products/latest');
+        const products = await response.json();
+        const productList = document.getElementById('product-list');
+
+        products.data.forEach(product => {
+          const card = document.createElement('div');
+          card.className = "bg-white rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col";
+
+          card.innerHTML = `
+            <img src="${product.image_url}" alt="${product.name}" class="w-full h-48 object-contain mb-4 rounded">
+            <h2 class="text-lg font-semibold mb-2 line-clamp-2">${product.name}</h2>
+            <p class="text-gray-500 text-sm mb-1">${product.short_name || ''}</p>
+            <div class="mt-auto">
+              <p class="text-blue-600 font-bold text-lg">₹${product.price}</p>
+              <p class="text-gray-500 text-sm line-through">₹${product.mrp}</p>
+              <p class="text-green-600 text-sm font-medium">${product.percent_off || ''}</p>
+           
+            </div>
+          `;
+
+          productList.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+            </script>
+</body>
+</html>

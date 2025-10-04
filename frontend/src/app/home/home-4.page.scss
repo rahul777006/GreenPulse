@@ -1,0 +1,304 @@
+
+// Responsive Design
+@media (max-width: 480px) {
+  .solutions-grid {
+    .solution-card:not(.featured) {
+      .solution-content {
+        padding: 15px;
+        
+        .solution-icon {
+          width: 34px;
+          height: 34px;
+          font-size: 24px;
+        }
+        
+        h4 {
+          font-size: 16px;
+        }
+        
+        p {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+  
+  .stats-grid {
+    .stat-card {
+      padding: 15px;
+      
+      ion-icon {
+        font-size: 28px;
+      }
+      
+      .stat-info {
+        .stat-number {
+          font-size: 20px;
+        }
+        
+        .stat-label {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.reminder-card, .price-card, .solution-card, .stat-card {
+  animation: slideInUp 0.6s ease forwards;
+}
+
+.solution-card.featured {
+  animation: slideInUp 0.6s ease forwards, pulse 2s ease-in-out infinite;
+}
+
+// Smooth scrolling for carousels
+.reminders-container, .prices-container {
+  scroll-snap-type: x mandatory;
+  
+  .reminder-slide, .price-slide {
+    scroll-snap-align: start;
+  }
+}
+
+
+// Loading states
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+
+
+
+.custom-tab-bar {
+  --background: white;
+  --border: 1px solid #e0e0e0;
+  height: 60px;
+  
+  ion-tab-button {
+    --color: #999;
+    --color-selected: #4a7c59;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+    
+    ion-label {
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+}
+
+ion-tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+// My Crops Section
+.my-crops-section {
+  // padding: 0 0 20px;
+  
+  .crops-slider {
+    overflow: hidden;
+    
+    .crops-container {
+      display: flex;
+      gap: 15px;
+      padding: 0 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    
+    .crop-slide {
+      flex: 0 0 160px;
+      scroll-snap-align: start;
+    }
+  }
+  
+  .crop-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    width: 100%;
+    
+    &:active {
+      transform: scale(0.95);
+    }
+    
+    .crop-image {
+      height: 90px;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    .crop-info {
+      padding: 12px;
+      
+      h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2E7D32;
+        margin: 0 0 8px 0;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      .crop-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        
+        .field-size {
+          font-size: 11px;
+          color: #757575;
+          font-weight: 500;
+        }
+        
+        .crop-status {
+          padding: 2px 6px;
+          border-radius: 8px;
+          font-size: 9px;
+          font-weight: 600;
+          align-self: flex-start;
+          
+          &.status-planted {
+            background: rgba(255, 193, 7, 0.15);
+            color: #F57C00;
+          }
+          
+          &.status-growing {
+            background: rgba(76, 175, 80, 0.15);
+            color: #2E7D32;
+          }
+          
+          &.status-flowering {
+            background: rgba(156, 39, 176, 0.15);
+            color: #7B1FA2;
+          }
+          
+          &.status-harvested {
+            background: rgba(76, 175, 80, 0.15);
+            color: #388E3C;
+          }
+        }
+      }
+    }
+  }
+  
+  .add-crop-card {
+    background: rgba(76, 175, 80, 0.05);
+    border: 1.5px dashed #4CAF50;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 160px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    
+    &:active {
+      transform: scale(0.95);
+      background: rgba(76, 175, 80, 0.1);
+    }
+    
+    ion-icon {
+      font-size: 32px;
+      color: #4CAF50;
+      margin-bottom: 6px;
+    }
+    
+    span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2E7D32;
+    }
+  }
+  
+  .no-crops-state {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    margin: 0 20px;
+    background: rgba(76, 175, 80, 0.05);
+    border-radius: 12px;
+    
+    ion-icon {
+      font-size: 32px;
+      color: #4CAF50;
+    }
+    
+    div {
+      flex: 1;
+      
+      h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2E7D32;
+        margin: 0 0 8px 0;
+      }
+      
+      ion-button {
+        --height: 32px;
+        --padding-start: 16px;
+        --padding-end: 16px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+}

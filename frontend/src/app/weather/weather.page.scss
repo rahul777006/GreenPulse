@@ -1,0 +1,414 @@
+.weather-page {
+  --background: linear-gradient(180deg, var(--ion-color-primary) 0%, #764ba2 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  color: white;
+}
+
+/* Hero Section */
+.hero-section {
+  height: 50vh;
+  // background: linear-gradient(135deg, var(--ion-color-primary) 0%, #764ba2 50%, #f093fb 100%);
+  background: rgb(34,139,34);
+background: linear-gradient(159deg, rgba(34,139,34,1) 0%, rgba(50,205,50,1) 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 20px 40px;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 0;
+}
+
+/* Location Header */
+.location-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  align-self: flex-start;
+  
+  .location-icon {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .location-info {
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+      color: white;
+    }
+    
+    p {
+      font-size: 14px;
+      margin: 2px 0 0 0;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+/* Main Weather Card */
+.main-weather-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 30px 24px;
+  width: calc(100% - 40px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  &.loading-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    
+    .loading-content {
+      text-align: center;
+      
+      ion-spinner {
+        --color: white;
+        margin-bottom: 16px;
+      }
+      
+      p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.weather-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.temperature-section {
+  display: flex;
+  align-items: flex-start;
+  
+  .temp-main {
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 0.9;
+    color: white;
+  }
+  
+  .temp-unit {
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 8px;
+    margin-left: 4px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.weather-info {
+  text-align: right;
+  
+  .weather-icon {
+    font-size: 48px;
+    color: #FFD700;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .condition {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+    color: white;
+  }
+  
+  .feels-like {
+    font-size: 14px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Weather Stats */
+.weather-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .stat-icon {
+      font-size: 20px;
+      color: #FFD700;
+      width: 24px;
+    }
+    
+    .stat-info {
+      .stat-value {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        line-height: 1.2;
+      }
+      
+      .stat-label {
+        display: block;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
+/* Content Section */
+.content-section {
+  background: linear-gradient(180deg, #f8f9ff 0%, #ffffff 100%);
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  margin-top: -32px;
+  padding: 32px 20px 40px;
+  min-height: 50vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* Alert Card */
+.alert-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid;
+  
+  &.warning {
+    border-left-color: #FF6B6B;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  }
+  
+  &.good {
+    border-left-color: #4CAF50;
+    background: linear-gradient(135deg, #f1f8e9 0%, #ffffff 100%);
+  }
+  
+  &.neutral {
+    border-left-color: #FF9800;
+    background: linear-gradient(135deg, #fff8e1 0%, #ffffff 100%);
+  }
+  
+  .alert-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    
+    .alert-icon {
+      font-size: 24px;
+      margin-top: 2px;
+      
+      .warning & { color: #FF6B6B; }
+      .good & { color: #4CAF50; }
+      .neutral & { color: #FF9800; }
+    }
+    
+    .alert-text {
+      flex: 1;
+      
+      h4 {
+        margin: 0 0 4px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+/* Forecast Section */
+.forecast-section {
+  margin-bottom: 24px;
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    
+    ion-button {
+      --color: var(--ion-color-primary);
+      font-size: 14px;
+    }
+  }
+}
+
+.forecast-container {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.forecast-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 8px 0;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+  }
+  
+  .forecast-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  
+  .forecast-icon {
+    font-size: 24px;
+    color: var(--ion-color-primary);
+    margin-bottom: 8px;
+  }
+  
+  .forecast-temp {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+}
+
+.forecast-loading {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Additional Info */
+.additional-info {
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .info-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    
+    .info-icon {
+      font-size: 24px;
+      color: var(--ion-color-primary);
+      width: 24px;
+    }
+    
+    .info-content {
+      flex: 1;
+      
+      .info-label {
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 4px;
+      }
+      
+      .info-value {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+    }
+  }
+}
+
+// Fade In Up Animation
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}

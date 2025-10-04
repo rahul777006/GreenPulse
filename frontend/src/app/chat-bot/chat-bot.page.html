@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Green Pulse Assistant</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="chat-page">
+  <div class="chat-container">
+    <div class="chat-bubble" 
+         [ngClass]="{'bot': msg.sender === 'bot', 'user': msg.sender === 'user', 'thinking': msg.isThinking}"
+         *ngFor="let msg of messages; let i = index">
+
+      <!-- Thinking Animation -->
+      <div *ngIf="msg.isThinking" class="thinking-animation">
+        <div class="thinking-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="thinking-text">Thinking...</span>
+      </div>
+
+      <!-- Regular Message Content -->
+      <div *ngIf="!msg.isThinking" [innerHTML]="msg.text"></div>
+
+      <!-- Speaker Icon for Bot Messages with Audio -->
+      <div *ngIf="msg.sender == 'bot' && msg.audioUrl && !msg.isThinking" class="audio-controls">
+        <ion-icon 
+          [name]="isMessagePlaying(i) ? 'volume-high' : 'volume-medium-outline'"
+          [class.playing]="isMessagePlaying(i)"
+          (click)="playAudio(msg.audioUrl, i)">
+        </ion-icon>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<!-- Fixed Input Bar -->
+   <ion-item>
+    <ion-label>Select Language</ion-label>
+    <ion-select [(ngModel)]="selectedLanguage" name="selectedLanguage">
+      <ion-select-option value="English">English</ion-select-option>
+      <ion-select-option value="Hindi">Hindi</ion-select-option>
+      <ion-select-option value="Punjabi">Punjabi</ion-select-option>
+    </ion-select>
+  </ion-item>
+<ion-footer>
+<ion-toolbar color="success">
+    <div class="chat-input">
+    <ion-icon name="camera-outline"></ion-icon>
+    <ion-button fill="clear" color="success">
+      <ion-icon name="mic-outline"></ion-icon>
+    </ion-button>
+    <ion-input type="text" placeholder="Type your message..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()"></ion-input>
+    <ion-icon name="send-outline" (click)="sendMessage()"></ion-icon>
+  </div>
+</ion-toolbar>
+</ion-footer>

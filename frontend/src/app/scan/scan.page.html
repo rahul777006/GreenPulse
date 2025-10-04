@@ -1,0 +1,262 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Plant Scanner</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="showHistory()">
+        <ion-icon name="time-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="showTips()">
+        <ion-icon name="help-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="scan-page">
+  <!-- Welcome Section -->
+  <div class="welcome-section" *ngIf="!scannedImage && !plantDetails && !loading">
+    <div class="welcome-content">
+      <div class="icon-container">
+        <ion-icon name="leaf" class="main-icon"></ion-icon>
+      </div>
+      <h1>Plant Scanner</h1>
+      <p>AI-powered plant identification</p>
+    </div>
+  </div>
+
+  <!-- Scanning Interface -->
+  <div class="scanning-section" *ngIf="!plantDetails && !loading">
+    <div class="camera-container">
+      <div class="camera-frame" (click)="triggerFileInput()">
+        <div class="image-preview" *ngIf="scannedImage">
+          <img [src]="scannedImage" alt="Selected Plant" class="preview-image" />
+          <div class="image-overlay">
+            <ion-button fill="clear" class="remove-btn" (click)="clearImage($event)">
+              <ion-icon name="close-circle" color="light"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+        
+        <div class="camera-placeholder" *ngIf="!scannedImage">
+          <div class="scan-frame">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+            <div class="scan-animation"></div>
+          </div>
+          <div class="camera-content">
+            <ion-icon name="camera" class="camera-icon"></ion-icon>
+            <h3>Capture Plant</h3>
+            <p>Position plant in the frame and tap to take photo</p>
+          </div>
+        </div>
+      </div>
+      
+      <input type="file" accept="image/*" hidden #fileInput (change)="onFileSelected($event)" />
+    </div>
+
+    <div class="action-buttons">
+      <ion-button expand="block" fill="outline" (click)="triggerFileInput()" class="gallery-btn">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Choose from Gallery
+      </ion-button>
+      
+      <ion-button expand="block" color="success" (click)="scanImage()" [disabled]="!scannedImage" class="identify-btn">
+        <ion-icon name="scan" slot="start"></ion-icon>
+        Identify Plant
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Plant Results Section -->
+  <div class="results-section" *ngIf="plantDetails && plantDetails.length > 0 && !loading">
+    <!-- Success Header -->
+    <div class="success-header fade-in-up">
+      <div class="success-icon">
+        <ion-icon name="checkmark-circle" color="success"></ion-icon>
+      </div>
+      <h2>Plant Identified!</h2>
+    </div>
+    
+    <div class="results-header fade-in-up" style="animation-delay: 0.1s">
+      <ion-button fill="clear" size="small" (click)="resetScan()" class="back-btn">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+      
+      <div class="confidence-indicator">
+        <div class="confidence-circle" [attr.data-confidence]="getConfidenceLevel(plantDetails[0].confidence)">
+          <span class="confidence-text">{{ plantDetails[0].confidence || '85%' }}</span>
+        </div>
+        <span class="confidence-label">Confidence</span>
+      </div>
+    </div>
+
+    <div class="plant-card fade-in-up" style="animation-delay: 0.2s">
+      <div class="plant-image-section">
+        <img [src]="scannedImage" alt="Identified Plant" class="plant-result-image" />
+        <div class="image-badge">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+        </div>
+      </div>
+      
+      <div class="plant-info">
+        <h1 class="plant-name fade-in-up" style="animation-delay: 0.3s">{{ plantDetails[0].name || 'Unknown Plant' }}</h1>
+        <p class="scientific-name fade-in-up" *ngIf="plantDetails[0].scientificName" style="animation-delay: 0.4s">{{ plantDetails[0].scientificName }}</p>
+        <div class="plant-tags fade-in-up" style="animation-delay: 0.5s">
+          <ion-chip [color]="getConfidenceLevel(plantDetails[0].confidence) === 'high' ? 'success' : getConfidenceLevel(plantDetails[0].confidence) === 'medium' ? 'warning' : 'danger'" outline>
+            <ion-label>{{ plantDetails[0].confidence || '85%' }} Match</ion-label>
+          </ion-chip>
+          <ion-chip color="primary" outline>
+            <ion-label>{{ getPlantType(plantDetails[0]) }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+    </div>
+
+    <div class="care-section fade-in-up" style="animation-delay: 0.6s">
+      <h2 class="section-title fade-in-up" style="animation-delay: 0.7s">
+        <ion-icon name="heart" color="success"></ion-icon>
+        Care Guide
+      </h2>
+      
+      <div class="care-grid">
+        <div class="care-item fade-in-up" style="animation-delay: 0.8s">
+          <ion-icon name="water" color="primary"></ion-icon>
+          <div>
+            <strong>Water:</strong> {{ plantDetails[0].watering || 'When soil is dry' }}
+          </div>
+        </div>
+        
+        <div class="care-item fade-in-up" style="animation-delay: 0.9s">
+          <ion-icon name="sunny" color="warning"></ion-icon>
+          <div>
+            <strong>Light:</strong> {{ plantDetails[0].sunlight || 'Bright indirect' }}
+          </div>
+        </div>
+        
+        <div class="care-item fade-in-up" style="animation-delay: 1.0s">
+          <ion-icon name="thermometer" color="danger"></ion-icon>
+          <div>
+            <strong>Temp:</strong> {{ plantDetails[0].temperature || '18-24°C' }}
+          </div>
+        </div>
+        
+        <div class="care-item fade-in-up" style="animation-delay: 1.1s">
+          <ion-icon name="cloud" color="medium"></ion-icon>
+          <div>
+            <strong>Humidity:</strong> {{ plantDetails[0].humidity || '40-60%' }}
+          </div>
+        </div>
+        
+        <div class="care-item fade-in-up" *ngIf="plantDetails[0].fertilizer" style="animation-delay: 1.2s">
+          <ion-icon name="nutrition" color="success"></ion-icon>
+          <div>
+            <strong>Feed:</strong> {{ plantDetails[0].fertilizer }}
+          </div>
+        </div>
+        
+        <div class="care-item fade-in-up" *ngIf="plantDetails[0].tips" style="animation-delay: 1.3s">
+          <ion-icon name="bulb" color="tertiary"></ion-icon>
+          <div>
+            <strong>Tip:</strong> {{ plantDetails[0].tips }}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- <div class="action-section fade-in-up" style="animation-delay: 1.4s">
+      <ion-button expand="block" color="success" (click)="saveToCollection()" class="save-btn fade-in-up" style="animation-delay: 1.5s">
+        <ion-icon name="bookmark" slot="start"></ion-icon>
+        Save to My Plants
+      </ion-button>
+      
+      <div class="secondary-actions fade-in-up" style="animation-delay: 1.6s">
+        <ion-button fill="outline" (click)="shareResult()" class="fade-in-up" style="animation-delay: 1.7s">
+          <ion-icon name="share-social" slot="start"></ion-icon>
+          Share
+        </ion-button>
+        
+        <ion-button fill="outline" (click)="getMoreInfo()" class="fade-in-up" style="animation-delay: 1.8s">
+          <ion-icon name="information-circle" slot="start"></ion-icon>
+          Learn More
+        </ion-button>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- Simple Creative Loading State -->
+  <div class="loading-overlay fade-in-up" *ngIf="loading">
+    <div class="loading-container">
+      <!-- Plant Growing Animation -->
+      <div class="plant-growing-animation">
+        <div class="pot">
+          <div class="soil"></div>
+          <div class="plant">
+            <div class="stem"></div>
+            <div class="leaves">
+              <div class="leaf leaf1"></div>
+              <div class="leaf leaf2"></div>
+              <div class="leaf leaf3"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Floating Sparkles -->
+        <div class="sparkles">
+          <div class="sparkle" *ngFor="let i of [1,2,3,4,5,6]"></div>
+        </div>
+      </div>
+      
+      <!-- Loading Message -->
+      <div class="loading-message">
+        <h3 class="message-text">{{ getCurrentLoadingMessage() }}</h3>
+        <div class="loading-dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced Error State -->
+  <div class="error-overlay ion-padding" *ngIf="error">
+    <div class="error-container">
+      <div class="error-icon">
+        <ion-icon name="alert-circle" color="danger"></ion-icon>
+      </div>
+      
+      <div class="error-content">
+        <h3>Identification Failed</h3>
+        <p>{{ error }}</p>
+        
+        <div class="error-suggestions">
+          <h4>💡 Try these tips:</h4>
+          <ul>
+            <li>Ensure good lighting</li>
+            <li>Focus on leaves or flowers</li>
+            <li>Keep plant centered in frame</li>
+            <li>Avoid blurry images</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="error-actions">
+        <ion-button color="success" (click)="retryIdentification()">
+          <ion-icon name="refresh" slot="start"></ion-icon>
+          Try Again
+        </ion-button>
+        
+        <ion-button fill="clear" (click)="clearError()">
+          <ion-icon name="camera" slot="start"></ion-icon>
+          Take New Photo
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

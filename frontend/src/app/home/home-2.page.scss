@@ -1,0 +1,112 @@
+
+// Reminders Section
+.reminders-section {
+  padding: 20px;
+  
+  .reminders-carousel {
+    .reminders-container {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 5px 0;
+      
+      // Hide scrollbar
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    
+    .reminder-slide {
+    flex: 1 0 353px;
+    max-width: 330px;
+    }
+    
+    .reminder-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      display: flex;
+      gap: 15px;
+      border-left: 4px solid;
+      
+      &.priority-high {
+        border-left-color: #F44336;
+        
+        .reminder-icon {
+          background: rgba(244, 67, 54, 0.1);
+          
+          ion-icon {
+            color: #F44336;
+          }
+        }
+      }
+      
+      &.priority-medium {
+        border-left-color: #FF9800;
+        
+        .reminder-icon {
+          background: rgba(255, 152, 0, 0.1);
+          
+          ion-icon {
+            color: #FF9800;
+          }
+        }
+      }
+      
+      &.priority-low {
+        border-left-color: #4CAF50;
+        
+        .reminder-icon {
+          background: rgba(76, 175, 80, 0.1);
+          
+          ion-icon {
+            color: #4CAF50;
+          }
+        }
+      }
+      
+      .reminder-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        
+        ion-icon {
+          font-size: 24px;
+        }
+      }
+      
+      .reminder-content {
+        flex: 1;
+        
+        h4 {
+          font-size: 16px;
+          font-weight: 600;
+          color: #212121;
+          margin: 0 0 6px 0;
+        }
+        
+        p {
+          font-size: 14px;
+          color: #757575;
+          margin: 0 0 8px 0;
+          line-height: 1.4;
+        }
+        
+        .reminder-time {
+          font-size: 12px;
+          color: #9E9E9E;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

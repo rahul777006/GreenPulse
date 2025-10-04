@@ -1,0 +1,8 @@
+
+
+export const environment = {
+  production: false,
+  googleMapsApiKey: 'AIzaSyDt_NAbS47BDTcwYOakAb7RUuv9usrRwdg', 
+  geminiApiKey: 'AIzaSyCqucjLfdHlLZrGOHNqBcDhKlqY37WdE3I',
+  elevenLabsApiKey: 'sk_3a7607f0c0df4262805a721f48f723edc94f2b396ed0c7fe'
+};

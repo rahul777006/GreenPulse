@@ -1,0 +1,103 @@
+<ion-content class="register-page">
+
+  <!-- Background with title -->
+  <div class="register-header">
+    <h1>Create Your Account</h1>
+    <p>Join our community of farmers</p>
+  </div>
+
+  <!-- Reactive Form -->
+  <form [formGroup]="signupForm" (ngSubmit)="submitSignupForm()" class="register-form">
+
+    <img src="../../assets/logo.png" alt="Logo" class="logo">
+
+    <!-- Full Name -->
+    <ion-item lines="none" [class.ion-invalid]="isFieldInvalid('fullName')">
+      <ion-input 
+        formControlName="fullName"
+        placeholder="Full Name"
+        type="text"
+        clearInput="true">
+      </ion-input>
+      <ion-icon name="person-outline" slot="end"></ion-icon>
+    </ion-item>
+    <div class="error-message" *ngIf="isFieldInvalid('fullName')">
+      {{ getFieldError('fullName') }}
+    </div>
+
+    <!-- Phone -->
+    <ion-item lines="none" [class.ion-invalid]="isFieldInvalid('phoneNumber')">
+      <ion-input 
+        formControlName="phoneNumber"
+        placeholder="Phone Number (10 digits)" 
+        type="tel"
+        maxlength="10"
+        clearInput="true"
+        (ionInput)="onPhoneNumberInput($event)">
+      </ion-input>
+      <ion-icon slot="end" name="call-outline"></ion-icon>
+    </ion-item>
+    <div class="error-message" *ngIf="isFieldInvalid('phoneNumber')">
+      {{ getFieldError('phoneNumber') }}
+    </div>
+
+    <!-- State -->
+    <ion-item lines="none" [class.ion-invalid]="isFieldInvalid('state')">
+      <ion-select 
+        formControlName="state"
+        aria-label="State" 
+        interface="action-sheet" 
+        placeholder="Select State">
+        <ion-select-option *ngFor="let state of indianStates" [value]="state">
+          {{ state }}
+        </ion-select-option>
+      </ion-select>
+      <ion-icon slot="end" name="business-outline"></ion-icon>
+    </ion-item>
+    <div class="error-message" *ngIf="isFieldInvalid('state')">
+      {{ getFieldError('state') }}
+    </div>
+
+    <!-- City -->
+    <ion-item lines="none" [class.ion-invalid]="isFieldInvalid('city')">
+      <ion-input 
+        formControlName="city"
+        placeholder="City/Village" 
+        type="text"
+        clearInput="true"
+        shape="round"
+        >
+      </ion-input>
+      <ion-icon slot="end" name="location-outline"></ion-icon>
+    </ion-item>
+    <div class="error-message" *ngIf="isFieldInvalid('city')">
+      {{ getFieldError('city') }}
+    </div>
+
+    <!-- Get Location Button -->
+    <ion-button 
+      (click)="getLocation()" 
+      color="primary" 
+      size="small" 
+      fill="clear" 
+      class="location-btn">
+      <ion-icon slot="end" name="location-outline"></ion-icon>
+      Detect My Location
+    </ion-button>
+
+    <!-- Submit -->
+    <ion-button 
+      expand="block" 
+      color="success" 
+      shape="round" 
+      class="s"
+      type="submit"
+      [disabled]="!signupForm.valid || isSubmitting">
+      <ion-spinner *ngIf="isSubmitting" name="crescent"></ion-spinner>
+      <span *ngIf="!isSubmitting">Create Account</span>
+      <span *ngIf="isSubmitting">Creating Account...</span>
+    </ion-button>
+
+  </form>
+
+</ion-content>

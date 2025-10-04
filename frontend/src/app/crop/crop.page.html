@@ -1,0 +1,251 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ t.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="resetForm()" *ngIf="showResponse">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="crop-page">
+  
+  <!-- Form Section -->
+  <div class="form-container" *ngIf="!showResponse">
+    <div class="hero-section">
+      <div class="hero-content">
+        <div class="hero-icon">
+          <img src="../../assets/logo.png" style="max-width:100px;margin:0px auto;" alt="">
+        </div>
+        <h1>{{ t.title }}</h1>
+        <p>{{ t.subtitle }}</p>
+        <div class="stats-row">
+          <div class="stat-item">
+            <ion-icon name="leaf-outline"></ion-icon>
+            <span>{{ t.smartAnalysis }}</span>
+          </div>
+          <div class="stat-item">
+            <ion-icon name="trending-up-outline"></ion-icon>
+            <span>{{ t.maxProfit }}</span>
+          </div>
+          <div class="stat-item">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>{{ t.expertAdvice }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form [formGroup]="cropForm" (ngSubmit)="getCropRecommendation()">
+        
+        <!-- Language Selection -->
+        <div class="section-header">
+          <ion-icon name="language-outline"></ion-icon>
+          <span>{{ t.preferredLanguage }}</span>
+        </div>
+      
+      <ion-item>
+        <ion-select formControlName="language" interface="popover" placeholder="Select Language">
+          <ion-select-option *ngFor="let lang of languages" [value]="lang.name">
+            {{ lang.display }} ({{ lang.name }})
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Farm Location -->
+      <div class="section-header">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>{{ t.farmDetails }}</span>
+      </div>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('location')">
+        <ion-input 
+          formControlName="location"
+          [label]="t.location"
+          labelPlacement="stacked"
+          [placeholder]="t.locationPlaceholder"
+          clearInput="true"
+          [(ngModel)]="location"
+          >
+        </ion-input>
+      </ion-item>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('soilType')">
+        <ion-select formControlName="soilType" [label]="t.soilType" labelPlacement="stacked" interface="action-sheet">
+          <ion-select-option *ngFor="let soil of soilTypes" [value]="soil.value">{{ soil.label }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('farmSize')">
+        <ion-select formControlName="farmSize" [label]="t.farmSize" labelPlacement="stacked" interface="action-sheet">
+          <ion-select-option *ngFor="let size of farmSizes" [value]="size.value">{{ size.label }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Environmental Conditions -->
+      <div class="section-header">
+        <ion-icon name="partly-sunny-outline"></ion-icon>
+        <span>{{ t.environmentalConditions }}</span>
+      </div>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('climate')">
+        <ion-select formControlName="climate" [label]="t.climateType" labelPlacement="stacked" interface="action-sheet">
+          <ion-select-option *ngFor="let climate of climateTypes" [value]="climate.value">{{ climate.label }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('waterAvailability')">
+        <ion-select formControlName="waterAvailability" [label]="t.waterAvailability" labelPlacement="stacked" interface="action-sheet">
+          <ion-select-option *ngFor="let water of waterSources" [value]="water.value">{{ water.label }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('season')">
+        <ion-select formControlName="season" [label]="t.plantingSeason" labelPlacement="stacked" interface="action-sheet">
+          <ion-select-option *ngFor="let season of seasons" [value]="season.value">{{ season.label }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Financial & Experience -->
+      <div class="section-header">
+        <ion-icon name="card-outline"></ion-icon>
+        <span>{{ t.budgetExperience }}</span>
+      </div>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('budget')">
+        <ion-input 
+          formControlName="budget"
+          [label]="t.budget"
+          labelPlacement="stacked"
+          type="number"
+          [placeholder]="t.budgetPlaceholder"
+          clearInput="true">
+        </ion-input>
+      </ion-item>
+
+      <ion-item [class.ion-invalid]="isFieldInvalid('experience')">
+        <ion-select formControlName="experience" [label]="t.farmingExperience" labelPlacement="stacked" interface="action-sheet">
+          <ion-select-option *ngFor="let exp of experienceLevels" [value]="exp.value">{{ exp.label }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Additional Information -->
+      <div class="section-header">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>{{ t.additionalInfo }}</span>
+      </div>
+
+      <ion-item>
+        <ion-textarea 
+          formControlName="previousCrops"
+          [label]="t.previousCrops"
+          labelPlacement="stacked"
+          [placeholder]="t.previousCropsPlaceholder"
+          rows="2">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea 
+          formControlName="specificRequirements"
+          [label]="t.specificRequirements"
+          labelPlacement="stacked"
+          [placeholder]="t.specificRequirementsPlaceholder"
+          rows="3">
+        </ion-textarea>
+      </ion-item>
+
+      <!-- Submit Button -->
+      <ion-button 
+        expand="block" 
+        type="submit"
+        color="success"
+        class="submit-btn"
+        [disabled]="!cropForm.valid || isSubmitting">
+        <ion-spinner *ngIf="isSubmitting" name="crescent"></ion-spinner>
+        <ion-icon *ngIf="!isSubmitting" name="sparkles-outline" slot="start"></ion-icon>
+        <span *ngIf="!isSubmitting">{{ t.getRecommendations }}</span>
+        <span *ngIf="isSubmitting">{{ t.analyzing }}</span>
+      </ion-button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Response Section -->
+  <div class="response-container" *ngIf="showResponse">
+    <div class="response-hero">
+      <div class="success-animation">
+        <div class="checkmark">✓</div>
+      </div>
+      <h2>{{ t.cropRecommendations }}</h2>
+      <p>{{ t.aiPoweredSuggestions }} {{ selectedLanguage }}</p>
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+      <ion-button 
+        [color]="isPlaying ? 'danger' : 'success'" 
+        fill="outline" 
+        size="small"
+        (click)="toggleSpeech()"
+        [disabled]="isGeneratingAudio">
+        <ion-spinner *ngIf="isGeneratingAudio" name="crescent"></ion-spinner>
+        <ion-icon *ngIf="!isGeneratingAudio" [name]="isPlaying ? 'stop-outline' : 'volume-high-outline'" slot="start"></ion-icon>
+        <span *ngIf="isGeneratingAudio">{{ t.generating }}</span>
+        <span *ngIf="!isGeneratingAudio">{{ isPlaying ? t.stopAudio : t.listenAudio }}</span>
+      </ion-button>
+
+    </div>
+
+    <!-- Response Content -->
+    <div class="response-card">
+      <div class="language-badge">
+        <ion-chip color="success">
+          <ion-icon name="language-outline"></ion-icon>
+          <ion-label>{{ selectedLanguage }}</ion-label>
+        </ion-chip>
+      </div>
+      
+      <div class="response-content" 
+           [class.truncated]="!showFullResponse"
+           [innerHTML]="showFullResponse ? aiResponse : getShortResponse()">
+      </div>
+      
+      <div class="response-actions" *ngIf="!showFullResponse && aiResponse.split(' ').length > 50">
+        <ion-button fill="clear" color="primary" (click)="toggleFullResponse()">
+          <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+          {{ t.readMore }}
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="bottom-actions">
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="primary" 
+        (click)="shareRecommendations()"
+        class="action-btn">
+        <ion-icon name="share-social-outline" slot="start"></ion-icon>
+        {{ t.shareRecommendations }}
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        color="success" 
+        (click)="resetForm()"
+        class="action-btn">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        {{ t.getNewRecommendations }}
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>

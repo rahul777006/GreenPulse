@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title>Chatbot</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="chat-page">
+
+  <!-- Chat Messages -->
+  <div class="chat-container">
+
+    <!-- Bot message -->
+    <div id="bot-msg-1" class="chat-bubble bot">
+      <p>Hi there! How can I help you?</p>
+    </div>
+
+    <!-- User message -->
+    <div id="user-msg-1" class="chat-bubble user">
+      <p>My tomato leaves have brown spots.</p>
+    </div>
+
+    <!-- Bot message -->
+    <div id="bot-msg-2" class="chat-bubble bot">
+      <p>Please upload a photo of the affected leaves.</p>
+    </div>
+
+    <!-- User image -->
+    <div id="user-msg-2" class="chat-bubble user image-msg">
+      <img src="https://img.freepik.com/premium-photo/success-business-watering-young-new-born-plant-growing-out-soil-sun-light_63726-1262.jpg" alt="Uploaded Photo" />
+    </div>
+
+    <!-- More messages -->
+    <div id="bot-msg-3" class="chat-bubble bot">
+      <p>Thanks! It looks like a fungal infection.</p>
+    </div>
+
+    <div id="user-msg-3" class="chat-bubble user">
+      <p>What should I do?</p>
+    </div>
+
+    <div id="bot-msg-4" class="chat-bubble bot">
+      <p>You can try spraying neem oil solution every 7 days.</p>
+    </div>
+
+    <div id="user-msg-4" class="chat-bubble user">
+      <p>Can I use chemical pesticide?</p>
+    </div>
+
+    <div id="bot-msg-5" class="chat-bubble bot">
+      <p>Yes, but use it carefully and follow instructions on the label.</p>
+    </div>
+
+    <div id="user-msg-5" class="chat-bubble user">
+      <p>Okay, thank you!</p>
+    </div>
+
+    <div id="bot-msg-6" class="chat-bubble bot">
+      <p>You're welcome! Let me know if you need more help.</p>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Fixed Input Bar -->
+<ion-footer>
+  <div class="chat-input">
+    <!-- <ion-icon name="camera-outline"></ion-icon>
+    <ion-button fill="clear" color="success">
+      <ion-icon name="mic-outline"></ion-icon>
+    </ion-button> -->
+    <ion-input type="text" placeholder="Type your message..."></ion-input>
+    <ion-icon name="send-outline"></ion-icon>
+  </div>
+</ion-footer>
